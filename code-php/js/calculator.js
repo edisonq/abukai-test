@@ -14,8 +14,16 @@ window.onload = function() {
 
   // NOT using jQuery sample
   document.addEventListener('keydown', function(event) {
-    let keysAccepted = ['1','2','3','4','5','6','7','8','9','0'];
+    let keysAccepted = ['1','2','3','4','5','6','7','8','9','0']
     let operationsAccepted = ['+','-','=','Enter', 'Backspace']
+
+    // to prevent the enter bug
+    if (event.keyCode === 13) {
+      // Cancel the default action, if needed
+      event.preventDefault();
+    }
+
+      
     if (keysAccepted.includes(event.key) === true) {
       newNumber += event.key
       console.log(event.key)

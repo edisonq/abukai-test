@@ -1,6 +1,6 @@
 <?php
 /*
-* Customer CUSTOMER API
+* Security API
 * @Author: Edison Quinones Jr.
 * 
 */
@@ -8,10 +8,11 @@ header('Content-type: application/json');
 
 // error displays
 // error_reporting(E_ALL);
-ini_set('display_errors', 1);
+ini_set('display_errors', 1); 
 
 // dependencies
 require_once './library/config.php';
+include_once './library/customer.php';
 
 // request method
 $requestMethod = $_SERVER['REQUEST_METHOD'];
@@ -21,16 +22,30 @@ session_start();
 
 // initial declration
 $data = [
-    "errorStatus" => false
+    "errorStatus" => false,
+    "errorMessage" => ''
 ];
+
 
 // required fields
 if ($requestMethod === 'POST') {
-    $firstname = filter_input(INPUT_POST, "firstname", FILTER_SANITIZE_STRING);
-    $city= filter_input(INPUT_POST, "city", FILTER_SANITIZE_STRING);
-    $country = filter_input(INPUT_POST, "country", FILTER_SANITIZE_STRING);
+    $email = strtolower(filter_input(INPUT_POST, "email", FILTER_VALIDATE_EMAIL));
+    $country = strtolower(filter_input(INPUT_POST, "country", FILTER_SANITIZE_STRING));
+    if ($email && $country && infoMatch($email, $country, $db)) {
+        $_SESSION['email'] = sha1($email);
+        echo json_encode($data);
+        exit();
+    } else {
+        // 405 Method Not Allowed
+        header("HTTP/1.1 405 Method Not Allowed");
 
-    if ($firstname || $city || $country) {
-        
+        $data['errorStatus'] = true;
+        $data["errorMessage"] = 'Invalid inputs';
+        echo json_encode($data);
+        exit();
     }
 }
+
+
+#### collecton of function for security
+ 

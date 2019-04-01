@@ -8,6 +8,5 @@ $dbname = 'abukai';
 
 $db = new db($dbhost, $dbuser, $dbpass, $dbname);
 
-$baseUrl = 'http://localhost/abukai/'
+$baseUrl = 'http://localhost/abukai/';
 
-?>

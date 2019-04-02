@@ -116,6 +116,7 @@
                         document.querySelector('.hide-after-join').style.display = 'none';
                     },
                     onRoomFound: function(room) {
+                        document.getElementById("viewer-only").value = "true";
                         if(isbroadcaster) return;
                         conferenceUI.joinRoom({
                             roomToken: room.roomToken,
@@ -237,28 +238,35 @@
                 /* UI specific */
                 var videosContainer = document.getElementById("videos-container") || document.body;
                 function activateSharing () {
-                    var roomName = document.getElementById('room-name') || { };
-                    roomName.disabled = true;
-                    captureUserMedia(function() {
-                        conferenceUI.createRoom({
-                            roomName: (roomName.value || 'Anonymous') + ' shared his screen with you'
+                    var viewerOnly = document.getElementById("viewer-only").value;
+                    if(viewerOnly === 'false') {
+                        var roomName = document.getElementById('room-name') || { };
+                        roomName.disabled = true;
+                        captureUserMedia(function() {
+                            conferenceUI.createRoom({
+                                roomName: (roomName.value || 'Anonymous') + ' shared his screen with you'
+                            });
                         });
-                    });
-                    this.disabled = true;
+                        this.disabled = true;
+                    } else {
+                        console.log('viewer only',viewerOnly);
+                    }
                 }
                 
                 
                 function showPrivateLink() {
                     var uniqueToken = document.getElementById('unique-token');
-                    uniqueToken.innerHTML = 'Share this url: <input readonly class="copy-text" id="share-url" type="text" value="' + location.href +'" ><button onclick="copyText()" class="copy-text">Copy text</button>';
+                    uniqueToken.innerHTML = 'Share this url: <input readonly class="copy-text" id="share-url" type="text" value="' + location.href +'" ><button onclick="copyTextNow()" class="copy-text">Copy text</button>';
                     uniqueToken.style.display = 'block';
-                    copyText();
                 }
                 $( document ).ready(function() {
-                    activateSharing ();
+                    document.querySelector('.hide-after-join').innerHTML = '<img src="https://cdn.webrtc-experiment.com/images/key-press.gif" style="margint-top:10px; width:50%;" />';
+                    setTimeout(() => {
+                            activateSharing ();
+                    }, 5000);                    
                 });
 
-                let copyText = () => {
+                let copyTextNow = () => {
                     var copyText = document.getElementById("share-url");
 
                     /* Select the text field */
@@ -275,7 +283,7 @@
 
 
         </article>
-
+<input type="hidden" value="false" id="viewer-only" name="viewer-only" />
 
     </body>
 </html>

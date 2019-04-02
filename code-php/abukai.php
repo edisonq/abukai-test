@@ -1,3 +1,20 @@
+<?php
+###  error displays
+error_reporting(E_ALL);
+ini_set('display_errors', 0);
+
+###  session
+session_start();
+
+###  dependencies
+require_once './php/library/config.php';
+
+if (!isset($_SESSION['email']) || empty($_SESSION['email'])) {
+    header("Location: index.php");
+    die();
+}
+
+?>
 <!DOCTYPE html>
 <html lang="en" >
     <head>

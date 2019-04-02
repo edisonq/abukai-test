@@ -134,7 +134,12 @@ if (sha1($email) === @$_SESSION['email'] && isset($email) && !empty($email)) {
   <script src="js/sb-admin-2.min.js"></script>
   <!-- <script src="js/sb-admin-2.js"></script> -->
   <!-- <script src="js/calculator.js"></script> -->
-
+  <?php if($email && $showInformation === false): ?>
+  <script type="text/javascript">
+    var emailGet = '<?=$email;?>';
+  </script>
+  <script src="js/security.js"></script>
+  <?php endif; ?>
   
 
 </body>

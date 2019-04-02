@@ -41,11 +41,13 @@
     <hr>
     <div class="text-center">
         <h1 class="h4 text-gray-900 mb-4">Mini Pocket Calculator</h1>
+        <span>To use calculator click any buttons below<br>You can use the keypad after clicking any button.</span>
         <iframe scrolling="no" class="col-lg-12" id="calculator-iframe" style="height: 250px; border: 0px; overflow: hidden;" src="./calculator.php"></iframe>
     </div>
     <hr>
     <div class="text-center">
         <h1 class="h4 text-gray-900 mb-4">Screen share utility</h1>
-        <button id="0" class="col-lg-12 btn btn-info btn-block">Activate Screen Share</button>
+        <button id="screen-sharing" class="col-lg-12 btn btn-info btn-block">Activate Screen Share</button>
     </div>
 </div>
+<script src="js/screensharing.js"></script>
